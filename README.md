@@ -1,4 +1,4 @@
-# ML Engineering Portfolio
+# Portfolio
 
 This portfolio documents my journey building end-to-end ML systems with a focus on infrastructure, deployment patterns, monitoring, and symbolic NLP. All projects are solo implementations designed to solve real problems, explore production-oriented architecture, and build fluency in ML engineering.
 
