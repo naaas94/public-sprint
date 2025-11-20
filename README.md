@@ -61,7 +61,7 @@ flowchart LR
 
   subgraph Observability & Eval
     EVAL[Eval Harness]
-    LOGS[Logs/Metrics (Prometheus/Grafana)]
+    LOGS[Logs/Metrics: Prometheus/Grafana]
   end
 
   SRC --> EDP --> MTP --> REG --> SMA
