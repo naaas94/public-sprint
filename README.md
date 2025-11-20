@@ -79,33 +79,6 @@ flowchart LR
 
 ---
 
-## Quickstart (10‑minute path)
-
-> One flow to prove reproducibility and observability.
-
-```bash
-# 1) Clone and bootstrap
-git clone https://github.com/<user>/portfolio && cd portfolio
-make dev            # creates venv, installs pinned deps
-
-# 2) Configure
-cp .env.example .env # fill in optional keys (none required for local demo)
-
-# 3) Minimal end‑to‑end
-make demo           # runs: data → train (MTP) → serve (SMA) → eval → metrics dump
-
-# 4) See metrics & logs
-make up-metrics     # launches Grafana/Prometheus locally (docker-compose)
-
-# 5) Run tests & quality gates
-make test lint type
-```
-
-* Determinism: global seed `42`, `PYTHONHASHSEED=0`, cuDNN deterministic on where relevant.
-* Sample data fixtures live under `data/fixtures/` (no external downloads needed).
-
----
-
 ## Evaluation (RAG/LLM + systems)
 
 **Retrieval metrics**
@@ -430,39 +403,6 @@ Each has: Quickstart, config examples, and `eval/` outputs.
 * [x] Structured logs + metrics hooks
 * [x] Minimal data fixtures checked into repo
 * [x] Doc: Quickstart + E2E path ≤10 minutes
-
-Badges (add per‑repo):
-
-```
-[![CI](https://img.shields.io/github/actions/workflow/status/<user>/<repo>/ci.yml?branch=main)]()
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)]()
-```
-
----
-
-## Repo layout (monorepo‑style pointers)
-
-```
-portfolio/
-├─ retail-copilot/          # NL→SQL architecture (GCP/Vertex)
-├─ pcc/                     # Privacy Case Classifier (Flyte, BigQuery)
-├─ mtp/                     # Model Training Pipeline (MLflow)
-├─ simple-model-api/        # FastAPI service with observability
-├─ rag-service/             # Semantic retrieval (FAISS, transformers)
-├─ agentic-reviewer/        # LLM-assisted auditing
-├─ embedding-mapper/        # Embedding comparison & drift
-├─ edp/                     # Data pipeline (Beam, Spark, Ray)
-├─ observability/           # Grafana/Prometheus dashboards
-└─ docs/                    # Architecture diagrams & dossiers
-```
-
----
-
-## Limitations & next steps (scoped)
-
-* Replace synthetic fixtures with small anonymized real‑world‑like sets (scripted in `data/`); keep size ≤10MB.
-* Add golden sets for RAG faithfulness with explicit citation spans.
-* Provide a one‑click `docker compose up` that brings **SMA + RAG + Grafana** together.
 
 ---
 
