@@ -1,8 +1,14 @@
+---
+noteId: "bd307770c60d11f0a850e3c6af386755"
+tags: []
+
+---
+
 # Alejandro Garay — AI Solutions Architect (NLP/RAG/Agentic)
 
 **I design, ship, and evaluate end‑to‑end AI systems** with a focus on NLP: retrieval‑augmented generation (RAG), agentic workflows, evaluation harnesses, and production patterns at individual scale. This repo is the **entry point** to my portfolio: code, diagrams, and evidence.
 
-**Last updated:** 2025‑10‑19
+**Last updated:** 2025‑11‑20
 
 ---
 
@@ -10,9 +16,10 @@
 
 * **Primary vector:** AI/ML **Solutions Architect** (NLP‑heavy: RAG, agents, finetuning/evals)
 * **Differentiator:** symbolic‑linguistic rigor + production patterns (pipelines, orchestration, testing, monitoring) rather than demo‑only prototypes
+* **Background:** Linguistics/Philosophy/Translation → AI/NLP (retrieval‑first, auditable systems)
 * **Proof mindset:** every featured project exposes **Quickstart → Metrics → Logs** so reviewers can verify claims in minutes
 
-> Short link to share: `github.com/<your‑org or user>/portfolio`
+> Short link to share: `github.com/naaas94/portfolio`
 
 ---
 
@@ -26,6 +33,7 @@
 | Productionized text classification             | **Privacy Case Classifier (PCC)** | F1/accuracy with data slices; confusion matrix; error analysis       | `pcc/README.md` → `notebooks/pcc_demo.ipynb`                       |
 | Observability for LLM APIs                     | **Simple Model API (SMA)**        | Prometheus metrics (RPS, P50/P95), structured logs, k6 load test     | `simple-model-api/README.md` → `make loadtest`                     |
 | Embedding analysis & migration                 | **Embedding Mapper**              | pairwise shifts, trust‑region plots, retrieval deltas                | `embedding-mapper/README.md` → `examples/compare_embeddings.ipynb` |
+| NL→SQL with safety & tenancy                   | **Retail Copilot**                | Intent taxonomy, SQL templates, validation rules, golden‑set evals   | `retail-copilot/docs/dossier.pdf` → `catalog/intents.yaml`        |
 
 ---
 
@@ -138,16 +146,25 @@ make up-metrics   # Grafana on http://localhost:3000 (admin/admin locally)
 
 ## Featured projects
 
-### 1) PCC — Privacy Case Classifier
+### 1) Retail Copilot NL→SQL Architecture (GCP/Vertex)
 
-* **Problem**: classify privacy requests/cases into workflow buckets.
-* **Pattern**: supervised text classification + error analysis + data slices.
-* **Implementation**: `scikit-learn`/`PyTorch` (optionally), Hydra configs, Docker, MLflow runs.
-* **Evidence**: macro‑F1 on fixtures; slice metrics (by entity/type); confusion matrix.
+* **Problem**: convert natural language queries into validated SQL + VizSpec JSON over BigQuery with safe multi‑tenant execution.
+* **Pattern**: NL→intent→slots→template→validator chain; spec‑first architecture with PoC→MVP→multi‑tenant evolution path.
+* **Implementation**: 35+ page architecture dossier; planner JSON, SQL templates, validation rules, tenant isolation (RLS/CLS, per‑tenant datasets/budgets), golden‑set eval, promotion gates.
+* **Evidence**: Intent taxonomy, glossary, SQL policies, router/planner prompts, test scaffolds, runbook, monitoring dashboards, SLOs (latency, cost, faithfulness), canary rollout specs.
+* **Start here**: `retail-copilot/docs/dossier.pdf` → `catalog/intents.yaml` → `prompts/planner-retail-v2.md`
+* **Status**: Architecture/spec delivered — 2025
+
+### 2) PCC — Privacy Case Classifier
+
+* **Problem**: classify privacy requests/cases into workflow buckets (GDPR/CCPA compliance).
+* **Pattern**: supervised text classification + error analysis + data slices; policy‑to‑pipeline translation.
+* **Implementation**: `scikit-learn`/Transformers (MiniLM), Flyte orchestration, BigQuery, Docker, MLflow runs.
+* **Evidence**: macro‑F1 on fixtures; slice metrics (by entity/type); confusion matrix; regulatory constraint mapping.
 * **Start here**: `pcc/notebooks/pcc_demo.ipynb`
 * **Status**: In progress — 2025‑10
 
-### 2) MTP — Model Training Pipeline
+### 3) MTP — Model Training Pipeline
 
 * **Problem**: reproducible training with experiment tracking & registries.
 * **Pattern**: `MLflow` + deterministic training + pinned deps + structured configs.
@@ -156,7 +173,7 @@ make up-metrics   # Grafana on http://localhost:3000 (admin/admin locally)
 * **Start here**: `mtp/examples/minimal_run.py`
 * **Status**: Stable — 2025‑10
 
-### 3) SMA — Simple Model API
+### 4) SMA — Simple Model API
 
 * **Problem**: serve models with SLAs and visibility.
 * **Pattern**: FastAPI + Prometheus + k6 load test + JSON logs.
@@ -169,10 +186,10 @@ make up-metrics   # Grafana on http://localhost:3000 (admin/admin locally)
 
 ## More projects
 
-* **RAG Service** — retrieval + rerank + prompt templates + eval harness (`recall@k`, faithfulness).
-* **Agentic Reviewer** — post‑hoc auditing loop (citation checks, rubric scores, red‑team prompts).
+* **RAG Service** — retrieval + rerank + prompt templates + eval harness (`recall@k`, faithfulness). Built for Spotify internal knowledge search with transformer embeddings + FAISS, freshness policies.
+* **Agentic Reviewer** — post‑hoc auditing loop (citation checks, rubric scores, red‑team prompts). Symbolic‑LLM hybrid for systematic agent performance evaluation.
 * **Embedding Mapper** — compare embedding models; visualize drift and retrieval deltas.
-* **EDP (Enterprise Data Pipeline)** — ingestion/validation to dataset release with schema contracts.
+* **EDP (Enterprise Data Pipeline)** — ingestion/validation to dataset release with schema contracts. Stack: Apache Beam, Spark, Ray, Kafka.
 
 Each has: Quickstart, config examples, and `eval/` outputs.
 
@@ -201,15 +218,16 @@ Badges (add per‑repo):
 
 ```
 portfolio/
-├─ pcc/
-├─ mtp/
-├─ simple-model-api/
-├─ rag-service/
-├─ agentic-reviewer/
-├─ embedding-mapper/
-├─ edp/
-├─ observability/
-└─ docs/
+├─ retail-copilot/          # NL→SQL architecture (GCP/Vertex)
+├─ pcc/                     # Privacy Case Classifier (Flyte, BigQuery)
+├─ mtp/                     # Model Training Pipeline (MLflow)
+├─ simple-model-api/        # FastAPI service with observability
+├─ rag-service/             # Semantic retrieval (FAISS, transformers)
+├─ agentic-reviewer/        # LLM-assisted auditing
+├─ embedding-mapper/        # Embedding comparison & drift
+├─ edp/                     # Data pipeline (Beam, Spark, Ray)
+├─ observability/           # Grafana/Prometheus dashboards
+└─ docs/                    # Architecture diagrams & dossiers
 ```
 
 ---
@@ -224,8 +242,12 @@ portfolio/
 
 ## About me
 
-I come from linguistics/philosophy/translation. I use that symbolic lens to design reliable NLP systems: clear problem framing, careful retrieval/representation choices, and evaluation you can trust.
+I come from **linguistics/philosophy/translation** (B.Sc. Technical‑Scientific Translation, B.Ed. English Language Teaching). I use that symbolic lens to design reliable NLP systems: clear problem framing, careful retrieval/representation choices, and evaluation you can trust.
 
-* LinkedIn: <link>
-* Substack: <link>
-* Email: <link>
+Most recently at **Spotify** (Sep 2024 – Jul 2025) as Data Scientist on Customer Experience & Privacy, where I architected privacy‑compliant NLP pipelines, delivered semantic retrieval capabilities, and partnered with Legal/Ops to turn policy into system guarantees.
+
+Currently based in **Buenos Aires, Argentina**.
+
+* **GitHub:** [github.com/naaas94](https://github.com/naaas94)
+* **LinkedIn:** [linkedin.com/in/alejandroa-garay](https://www.linkedin.com/in/alejandroa-garay/)
+* **Email:** alejandroa.garay.ag@gmail.com
