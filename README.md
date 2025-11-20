@@ -1,10 +1,4 @@
----
-noteId: "bd307770c60d11f0a850e3c6af386755"
-tags: []
-
----
-
-# Alejandro Garay — AI Solutions Architect (NLP/RAG/Agentic)
+# Alejandro Garay — AI Solutions Architect 
 
 **I design, ship, and evaluate end‑to‑end AI systems** with a focus on NLP: retrieval‑augmented generation (RAG), agentic workflows, evaluation harnesses, and production patterns at individual scale. This repo is the **entry point** to my portfolio: code, diagrams, and evidence.
 
