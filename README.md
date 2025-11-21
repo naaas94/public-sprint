@@ -13,8 +13,6 @@
 * **Background:** Linguistics/Philosophy/Translation → AI/NLP (retrieval‑first, auditable systems)
 * **Proof mindset:** every featured project exposes **Quickstart → Metrics → Logs** so reviewers can verify claims in minutes
 
-> Short link to share: `github.com/naaas94/portfolio`
-
 ---
 
 ## Hiring signals (pattern → evidence)
