@@ -2,7 +2,7 @@
 
 **I design, ship, and evaluate end‑to‑end AI systems** with a focus on NLP: retrieval‑augmented generation (RAG), agentic workflows, evaluation harnesses, and production patterns at individual scale. This repo is the **entry point** to my portfolio: code, diagrams, and evidence.
 
-**Last updated:** 2025‑11‑20
+**Last updated:** 2025‑11‑29
 
 ---
 
@@ -12,6 +12,8 @@
 * **Differentiator:** symbolic‑linguistic rigor + production patterns (pipelines, orchestration, testing, monitoring) rather than demo‑only prototypes
 * **Background:** Linguistics/Philosophy/Translation → AI/NLP (retrieval‑first, auditable systems)
 * **Proof mindset:** every featured project exposes **Quickstart → Metrics → Logs** so reviewers can verify claims in minutes
+
+> Short link to share: `github.com/naaas94/portfolio`
 
 ---
 
@@ -181,40 +183,6 @@ graph TD
   class APIGW,API,ORCH,LLM,PIPE,MATCH,BQ,AUDIT,CATALOG,VALID,POLICY,ASM,VIZ,LOOKER,LOGS,MON,ERR,TRACE node;
 ```
 
-**Request flow (sequence)**
-
-```mermaid
-sequenceDiagram
-  autonumber
-  participant U as User
-  participant G as API Gateway
-  participant A as Cloud Run API
-  participant O as Orchestrator
-  participant M as Vertex Gemini
-  participant V as SQL Validator
-  participant Q as BigQuery
-  participant R as Answer Assembler
-
-  U->>G: Request with JWT
-  G->>A: Forward request
-  A->>O: Route + policy
-  O->>M: NL to intent and slots
-  M-->>O: Intent + slots + candidate SQL
-  O->>V: Validate SQL with allowlist
-  V-->>O: Safe SQL or error
-
-  alt Safe path
-    O->>Q: Execute safe SQL (params)
-    Q-->>O: Rows and job stats
-    O->>R: Build answer and VizSpec
-    R-->>A: Answer + explain + viz
-    A-->>U: Streamed response
-  else Blocked
-    O-->>A: Refusal + suggested rephrase
-    A-->>U: Guidance
-  end
-```
-
 **Data lineage (from NL to Viz)**
 
 ```mermaid
@@ -227,123 +195,6 @@ graph LR
   E --> Z[VizSpec JSON]
   Z --> D[Dashboard or Looker]
   X --> U[User traceability]
-```
-
-**Multi-tenant isolation (execution + logs + budgets)**
-
-```mermaid
-graph TD
-  subgraph PLATFORM [Platform project]
-    ORCH[Orchestrator]
-    EP[Vertex Endpoint]
-    CATALOG[Catalog repo]
-    LOGROUTER[Log Router]
-  end
-
-  subgraph TENANT_A [Project: tenant A]
-    BQ_A[(BQ dataset A)]
-    SA_A[Service Account A]
-    LOGS_A[Logs A]
-    BUD_A[Budget A]
-  end
-
-  subgraph TENANT_B [Project: tenant B]
-    BQ_B[(BQ dataset B)]
-    SA_B[Service Account B]
-    LOGS_B[Logs B]
-    BUD_B[Budget B]
-  end
-
-  ORCH --> CATALOG
-  ORCH -. impersonate SA_A .-> BQ_A
-  ORCH -. impersonate SA_B .-> BQ_B
-
-  ORCH --> LOGROUTER
-  EP --> LOGROUTER
-  LOGROUTER --> LOGS_A
-  LOGROUTER --> LOGS_B
-  LOGS_A --> BUD_A
-  LOGS_B --> BUD_B
-
-  BQ_A --> LOGS_A
-  BQ_B --> LOGS_B
-```
-
-**Deployment topology (projects, services, IAM)**
-
-```mermaid
-graph LR
-  subgraph ORG [Org: Retail Copilot]
-    subgraph DEV [Project: copilot-dev]
-      APIGW_D(API Gateway)
-      API_D[Cloud Run API]
-      ORCH_D[Orchestrator]
-      VALID_D[SQL Validator]
-      ASM_D[Answer Assembler]
-      subgraph VTX_D [Vertex dev]
-        EP_D[Endpoint]
-        PIPE_D[Pipelines]
-        ME_D[Matching]
-      end
-      subgraph BQ_D [BigQuery dev]
-        DS_CORE_D[(core_dev)]
-        DS_LOGS_D[(logs_dev)]
-      end
-      OBS_D[Logging & Monitoring]
-    end
-
-    subgraph STG [Project: copilot-stg]
-      APIGW_S(API Gateway)
-      API_S[Cloud Run API]
-      ORCH_S[Orchestrator]
-      VALID_S[SQL Validator]
-      ASM_S[Answer Assembler]
-      EP_S[Vertex Endpoint]
-      DS_CORE_S[(core_stg)]
-      OBS_S[Logging & Monitoring]
-    end
-
-    subgraph PRD [Project: copilot-prd]
-      APIGW_P(API Gateway)
-      API_P[Cloud Run API]
-      ORCH_P[Orchestrator]
-      VALID_P[SQL Validator]
-      ASM_P[Answer Assembler]
-      subgraph VTX_P [Vertex prod]
-        EP_P[Endpoint]
-        PIPE_P[Pipelines]
-        ME_P[Matching]
-      end
-      subgraph BQ_P [BigQuery prod]
-        DS_A[(sales_tenant_a)]
-        DS_B[(sales_tenant_b)]
-        AUDIT_P[(BQ audit)]
-      end
-      OBS_P[Logging & Monitoring]
-      BUD_P[Budgets & Alerts]
-    end
-  end
-
-  CATALOG[Repo: catalog/] --- ORCH_D
-  CATALOG --- ORCH_S
-  CATALOG --- ORCH_P
-
-  APIGW_P --> API_P --> ORCH_P
-  ORCH_P --> EP_P
-  ORCH_P --> VALID_P
-  VALID_P --> DS_A
-  VALID_P --> DS_B
-  ORCH_P --> ASM_P
-
-  API_P --> OBS_P
-  ORCH_P --> OBS_P
-  EP_P --> OBS_P
-  DS_A --> AUDIT_P --> OBS_P
-  DS_B --> AUDIT_P
-  OBS_P --> BUD_P
-
-  ORCH_P -. SA per tenant .- DS_A
-  ORCH_P -. SA per tenant .- DS_B
 ```
 
 ### 2) PCC — Privacy Case Classifier
