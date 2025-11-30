@@ -20,7 +20,7 @@
 | Real‑world pattern                             | What I built                      | Evidence                                                             | First file to open                                                 |
 | ---------------------------------------------- | --------------------------------- | -------------------------------------------------------------------- | ------------------------------------------------------------------ |
 | Ingestion → Train → Evaluate → Serve → Monitor | **Model Training Pipeline (MTP)** | CI badge, MLflow runs, deterministic seeds, latency & cost snapshots | `mtp/README.md` → `examples/minimal_run.py`                        |
-| RAG with retrieval quality gates               | **Lightweight RAG Service**       | recall@k, precision@k, answer faithfulness, context‑utilization      | `rag-service/README.md` → `scripts/eval_rag.py`                    |
+| RAG with retrieval quality gates               | **Retail Copilot**       | recall@k, precision@k, answer faithfulness, context‑utilization      | `retail-copilot/docs/dossier.pdf`                    |
 | Post‑hoc guardrails/verification               | **Agentic Reviewer**              | hallucination checks, citation verification, rubric‑based scoring    | `agentic-reviewer/README.md` → `examples/review_demo.ipynb`        |
 | Productionized text classification             | **Privacy Case Classifier (PCC)** | F1/accuracy with data slices; confusion matrix; error analysis       | `pcc/README.md` → `notebooks/pcc_demo.ipynb`                       |
 | Observability for LLM APIs                     | **Simple Model API (SMA)**        | Prometheus metrics (RPS, P50/P95), structured logs, k6 load test     | `simple-model-api/README.md` → `make loadtest`                     |
@@ -66,9 +66,6 @@ flowchart LR
   MTP --> EVAL
   RAG --> EVAL
 ```
-
-* Diagram asset: `/docs/architecture.png` (PNG export); source: `/docs/architecture.mmd` (Mermaid)
-
 ---
 
 ## Evaluation (RAG/LLM + systems)
@@ -90,7 +87,6 @@ flowchart LR
 
 * **Latency** `P50/P95`, **throughput** `RPS`, **cost/request**, **timeouts/error rate**, and **SLO/error budget** (e.g., `P95 < 800ms`, monthly error budget 0.5%).
 
-Each featured repo ships an `eval/` folder with scripts + JSON logs compatible with the shared dashboard panels in `observability/`.
 
 ---
 
@@ -111,7 +107,7 @@ make up-metrics   # Grafana on http://localhost:3000 (admin/admin locally)
 
 ## Featured projects
 
-### 1) Retail Copilot PoC → RAG MVP SOW 
+### 1) Retail Copilot PoC → RAG MVP 
 
 * **Problem**: convert natural language queries into validated SQL + VizSpec JSON over BigQuery with safe multi‑tenant execution.
 * **Pattern**: NL→intent→slots→template→validator chain; spec‑first architecture with PoC→MVP→multi‑tenant evolution path.
@@ -203,7 +199,6 @@ graph LR
 * **Implementation**: `scikit-learn`/Transformers (MiniLM), Flyte orchestration, BigQuery, Docker, MLflow runs.
 * **Evidence**: macro‑F1 on fixtures; slice metrics (by entity/type); confusion matrix; regulatory constraint mapping.
 * **Start here**: `pcc/notebooks/pcc_demo.ipynb`
-* **Status**: In progress — 2025‑10
 
 ### 3) MTP — Model Training Pipeline
 
@@ -212,7 +207,6 @@ graph LR
 * **Implementation**: Makefile targets (`make train/eval/register`), CI, Docker multi‑stage.
 * **Evidence**: MLflow artifacts, metrics tables, model in `registry/`.
 * **Start here**: `mtp/examples/minimal_run.py`
-* **Status**: Stable — 2025‑10
 
 ### 4) SMA — Simple Model API
 
@@ -221,7 +215,6 @@ graph LR
 * **Implementation**: `docker-compose up`, `/metrics` endpoint, request IDs, middleware timing.
 * **Evidence**: P50/P95 latency charts; RPS under load; error rates.
 * **Start here**: `simple-model-api/README.md` → `make loadtest`
-* **Status**: Stable — 2025‑10
 
 ---
 
@@ -231,8 +224,6 @@ graph LR
 * **Agentic Reviewer** — post‑hoc auditing loop (citation checks, rubric scores, red‑team prompts). Symbolic‑LLM hybrid for systematic agent performance evaluation.
 * **Embedding Mapper** — compare embedding models; visualize drift and retrieval deltas.
 * **EDP (Enterprise Data Pipeline)** — ingestion/validation to dataset release with schema contracts. Stack: Apache Beam, Spark, Ray, Kafka.
-
-Each has: Quickstart, config examples, and `eval/` outputs.
 
 ---
 
