@@ -13,8 +13,6 @@
 * **Background:** Linguistics/Philosophy/Translation → AI/NLP (retrieval‑first, auditable systems)
 * **Proof mindset:** every featured project exposes **Quickstart → Metrics → Logs** so reviewers can verify claims in minutes
 
-> Short link to share: `github.com/naaas94/portfolio`
-
 ---
 
 ## Hiring signals (pattern → evidence)
@@ -113,7 +111,7 @@ make up-metrics   # Grafana on http://localhost:3000 (admin/admin locally)
 
 ## Featured projects
 
-### 1) Retail Copilot NL→SQL Architecture (GCP/Vertex)
+### 1) Retail Copilot PoC → RAG MVP SOW 
 
 * **Problem**: convert natural language queries into validated SQL + VizSpec JSON over BigQuery with safe multi‑tenant execution.
 * **Pattern**: NL→intent→slots→template→validator chain; spec‑first architecture with PoC→MVP→multi‑tenant evolution path.
@@ -121,6 +119,7 @@ make up-metrics   # Grafana on http://localhost:3000 (admin/admin locally)
 * **Evidence**: Intent taxonomy, glossary, SQL policies, router/planner prompts, test scaffolds, runbook, monitoring dashboards, SLOs (latency, cost, faithfulness), canary rollout specs.
 * **Start here**: `retail-copilot/docs/dossier.pdf` → `catalog/intents.yaml` → `prompts/planner-retail-v2.md`
 * **Status**: Architecture/spec delivered — 2025
+* **Repo**: PoC [repo](https://github.com/naaas94/retail-copilot-gcp) to back SOW
 
 #### Architecture diagrams
 
