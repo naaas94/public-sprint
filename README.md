@@ -2,7 +2,7 @@
 
 **I design, ship, and evaluate end‑to‑end AI systems** with a focus on NLP: retrieval‑augmented generation (RAG), agentic workflows, evaluation harnesses, and production patterns at individual scale. This repo is the **entry point** to my portfolio: code, diagrams, and evidence.
 
-**Last updated:** 2025‑11‑29
+**Last updated:** 2025‑12-01
 
 ---
 
@@ -11,6 +11,7 @@
 * **Primary vector:** AI/ML **Solutions Architect** (NLP‑heavy: RAG, agents, finetuning/evals)
 * **Differentiator:** symbolic‑linguistic rigor + production patterns (pipelines, orchestration, testing, monitoring) rather than demo‑only prototypes
 * **Background:** Linguistics/Philosophy/Translation → AI/NLP (retrieval‑first, auditable systems)
+
 
 ---
 
@@ -21,8 +22,8 @@
 | Ingestion → Train → Evaluate → Serve → Monitor | **Model Training Pipeline (MTP)** | CI badge, MLflow runs, deterministic seeds, latency & cost snapshots | `mtp/README.md` → `examples/train_run_example.py`                        |
 | RAG with retrieval quality gates               | **Retail Copilot**       | recall@k, precision@k, answer faithfulness, context‑utilization      | `retail-copilot/docs/SOW_Dossier.pdf`                    |
 | Post‑hoc guardrails/verification               | **Agentic Reviewer**              | hallucination checks, citation verification, rubric‑based scoring    | `agentic-reviewer/README.md` → `demo.py (ipynb coming soon)`        |
-| Productionized text classification             | **Privacy Case Classifier (PCC)** | F1/accuracy with data slices; confusion matrix; error analysis       | `pcc/README.md` → `notebooks/pcc_demo.ipynb`                       |
-| Observability for LLM APIs                     | **Simple Model API (SMA)**        | Prometheus metrics (RPS, P50/P95), structured logs, k6 load test     | `simple-model-api/README.md` → `make loadtest`                     |
+| Productionized text classification             | **Privacy Case Classifier (PCC)** | F1/accuracy with data slices; confusion matrix; error analysis       | `pcc/README.md` → `notebooks/model_analysis.ipynb`                       |
+| Observability for LLM APIs                     | **Simple Model API (SMA)**        | Prometheus metrics (RPS, P50/P95), structured logs, k6 load test     | `simple-model-api/README.md` → `Makefile`                     |
 | Embedding analysis & migration                 | **Embedding Mapper**              | pairwise shifts, trust‑region plots, retrieval deltas                | `embedding-mapper/README.md` → `examples/compare_embeddings.ipynb` |
 | NL→SQL with safety & tenancy                   | **Retail Copilot**                | Intent taxonomy, SQL templates, validation rules, golden‑set evals   | `retail-copilot/docs/dossier.pdf` → `catalog/intents.yaml`        |
 
